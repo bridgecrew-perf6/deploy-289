@@ -1,0 +1,50 @@
+name: Build and deploy CI
+
+on: workflow_dispatch
+
+# on:
+#   push:
+#     branches: [main, develop]
+
+env:
+  AZURE_WEBAPP_NAME: 'freelearnnodeapp1'         # set this to your application's name
+  BUILD_PATH: './build'                          # set this to the path to your web app project, defaults to the repository root
+  NODE_VERSION: '16.x'
+  
+jobs:
+
+  Job1-build-and-deploy:
+    name: Build and deploy
+    runs-on: ubuntu-latest
+
+    steps:
+
+    - name: Checkout repository
+      uses: actions/checkout@v2
+
+    - name: Setup Node.js ${{ env.NODE_VERSION }}
+      uses: actions/setup-node@v2
+      with:
+        node-version: ${{ env.NODE_VERSION }}
+
+    - name: Install App dependencies
+      run: npm ci
+
+    - name: Run Build
+      id: build
+      run: npm run build
+    
+    - name: Deploy to Azure AppService
+      if: ${{ always() && steps.build.outcome == 'success' }}
+      uses: azure/webapps-deploy@v1
+      with: 
+        app-name: ${{ env.AZURE_WEBAPP_NAME }}
+        publish-profile: ${{ secrets.AZURE_APPSERVICE_PUBLISH_PROFILE }}
+        package: ${{ env.BUILD_PATH }}
+
+    - name: Deploy to Azure Storage
+      if: ${{ always() && steps.build.outcome == 'success' }}
+      uses: TravisSpomer/deploy-to-azure-storage@v1.4.0
+      with:
+        source-path: ${{ env.BUILD_PATH }}
+        sas-url: ${{ secrets.DEPLOY_SAS_URL }}

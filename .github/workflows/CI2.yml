@@ -1,0 +1,52 @@
+name: Temp Build and deploy CI
+
+on: workflow_dispatch
+# on:
+#   push:
+#     branches: [main, develop]
+
+jobs:
+
+  common:
+    runs-on: ubuntu-latest
+    outputs:
+      branch: ${{ steps.extract_branch.outputs.branch }}
+
+    steps:
+      - name: Do Common steps
+        run: echo "Do Common steps..."
+      
+      - name: Extract branch name
+        id: extract_branch
+        shell: bash
+        run: echo "::set-output name=branch::$(echo ${GITHUB_REF#refs/heads/})"
+
+      - name: DIsplay Common Context object
+        run: echo "$GITHUB_CONTEXT"
+
+  deploy-staging:
+    needs: common
+    runs-on: ubuntu-latest
+    environment: staging
+    if: ${{ needs.common.outputs.branch == 'develop' }}
+
+    steps:
+      - name: Do Staging steps
+        run: echo "Do Staging steps..."
+
+      - name: DIsplay Staging Context object
+        run: echo "$GITHUB_CONTEXT"
+
+  deploy-production:
+    needs: common
+    runs-on: ubuntu-latest
+    environment: production
+    if: ${{ needs.common.outputs.branch == 'main' }}
+
+    steps:
+      - name: Do Production steps
+        run: echo "Do Production steps..."
+
+      - name: DIsplay Production Context object
+        run: echo "$GITHUB_CONTEXT"
+
