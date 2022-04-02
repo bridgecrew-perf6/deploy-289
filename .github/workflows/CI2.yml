@@ -22,7 +22,7 @@ jobs:
         run: echo "::set-output name=branch::$(echo ${GITHUB_REF#refs/heads/})"
 
       - name: DIsplay Common Context object
-        run: echo ${{ GITHUB_CONTEXT }}
+        run: echo "$GITHUB_CONTEXT"
 
   deploy-staging:
     needs: common
@@ -35,7 +35,7 @@ jobs:
         run: echo "Do Staging steps..."
 
       - name: DIsplay Staging Context object
-        run: echo ${{ GITHUB_CONTEXT }}
+        run: echo "$GITHUB_CONTEXT"
 
   deploy-production:
     needs: common
@@ -48,5 +48,5 @@ jobs:
         run: echo "Do Production steps..."
 
       - name: DIsplay Production Context object
-        run: echo ${{ GITHUB_CONTEXT }}
+        run: echo "$GITHUB_CONTEXT"
 
