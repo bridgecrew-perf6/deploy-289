@@ -39,6 +39,9 @@ jobs:
         uses: wemogy/get-environment-action@v2.0
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
+          staging-branch: "develop"
+          prod-branch: "main"
+          dev-branch: ""
 
       - name: DIsplay Environment
         run: echo ${{ steps.get-environment.outputs.env }}
@@ -61,6 +64,9 @@ jobs:
         uses: wemogy/get-environment-action@v2.0
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
+          staging-branch: "develop"
+          prod-branch: "main"
+          dev-branch: ""
 
       - name: DIsplay Environment
         run: echo ${{ steps.get-environment.outputs.env }}
