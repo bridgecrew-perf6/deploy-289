@@ -27,12 +27,21 @@ jobs:
   deploy-staging:
     needs: common
     runs-on: ubuntu-latest
-    environment: staging
+    # environment: staging
     if: ${{ needs.common.outputs.branch == 'develop' }}
 
     steps:
       - name: Do Staging steps
         run: echo "Do Staging steps...."
+
+      - name: Get Environment
+        id: get-environment
+        uses: wemogy/get-environment-action@v6.0
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: DIsplay Environment
+        run: echo ${{ steps.get-environment.outputs.env }}
 
       - name: DIsplay Staging Context object
         run: echo '${{ toJSON(github) }}'
@@ -40,12 +49,21 @@ jobs:
   deploy-production:
     needs: common
     runs-on: ubuntu-latest
-    environment: production
+    # environment: production
     if: ${{ needs.common.outputs.branch == 'main' }}
 
     steps:
       - name: Do Production steps
         run: echo "Do Production steps..."
+
+      - name: Get Environment
+        id: get-environment
+        uses: wemogy/get-environment-action@v6.0
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: DIsplay Environment
+        run: echo ${{ steps.get-environment.outputs.env }}
 
       - name: DIsplay Production Context object
         run: echo '${{ toJSON(github) }}'
