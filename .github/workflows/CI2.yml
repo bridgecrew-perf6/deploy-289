@@ -32,7 +32,7 @@ jobs:
 
     steps:
       - name: Do Staging steps
-        run: echo "Do Staging steps..."
+        run: echo "Do Staging steps...."
 
       - name: DIsplay Staging Context object
         run: echo "$GITHUB_CONTEXT"
