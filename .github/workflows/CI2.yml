@@ -34,17 +34,26 @@ jobs:
       - name: Do Staging steps
         run: echo "Do Staging steps...."
 
-      - name: Get Environment
-        id: get-environment
-        uses: wemogy/get-environment-action@v2.0
-        with:
-          github-token: ${{ secrets.GITHUB_TOKEN }}
-          staging-branch: "develop"
-          prod-branch: "main"
-          dev-branch: ""
+      # - name: Get Environment
+      #   id: get-environment
+      #   uses: wemogy/get-environment-action@v2.0
+      #   with:
+      #     github-token: ${{ secrets.GITHUB_TOKEN }}
+      #     staging-branch: "develop"
+      #     prod-branch: "main"
+      #     dev-branch: ""
 
-      - name: DIsplay Environment
-        run: echo ${{ steps.get-environment.outputs.env }}
+      # - name: DIsplay Environment
+      #   run: echo ${{ steps.get-environment.outputs.env }}
+
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 17
+      - run: npm install @actions/core jsonwebtoken
+      - id: environment
+        run: node getenvironment.js
+      - run: echo ${{steps.environment.outputs.environment}}
 
       - name: DIsplay Staging Context object
         run: echo '${{ toJSON(github) }}'
@@ -59,17 +68,26 @@ jobs:
       - name: Do Production steps
         run: echo "Do Production steps..."
 
-      - name: Get Environment
-        id: get-environment
-        uses: wemogy/get-environment-action@v2.0
-        with:
-          github-token: ${{ secrets.GITHUB_TOKEN }}
-          staging-branch: "develop"
-          prod-branch: "main"
-          dev-branch: ""
+      # - name: Get Environment
+      #   id: get-environment
+      #   uses: wemogy/get-environment-action@v2.0
+      #   with:
+      #     github-token: ${{ secrets.GITHUB_TOKEN }}
+      #     staging-branch: "develop"
+      #     prod-branch: "main"
+      #     dev-branch: ""
 
-      - name: DIsplay Environment
-        run: echo ${{ steps.get-environment.outputs.env }}
+      # - name: DIsplay Environment
+      #   run: echo ${{ steps.get-environment.outputs.env }}
+
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 17
+      - run: npm install @actions/core jsonwebtoken
+      - id: environment
+        run: node getenvironment.js
+      - run: echo ${{steps.environment.outputs.environment}}
 
       - name: DIsplay Production Context object
         run: echo '${{ toJSON(github) }}'
