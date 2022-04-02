@@ -36,7 +36,7 @@ jobs:
 
       - name: Get Environment
         id: get-environment
-        uses: wemogy/get-environment-action@v6.0
+        uses: wemogy/get-environment-action@v2.0
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
 
@@ -58,7 +58,7 @@ jobs:
 
       - name: Get Environment
         id: get-environment
-        uses: wemogy/get-environment-action@v6.0
+        uses: wemogy/get-environment-action@v2.0
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
 
