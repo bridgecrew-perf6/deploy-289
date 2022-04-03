@@ -27,7 +27,7 @@ jobs:
   deploy-staging:
     needs: common
     runs-on: ubuntu-latest
-    # environment: staging
+    environment: staging
     if: ${{ needs.common.outputs.branch == 'develop' }}
 
     steps:
@@ -46,14 +46,21 @@ jobs:
       # - name: DIsplay Environment
       #   run: echo ${{ steps.get-environment.outputs.env }}
 
-      - uses: actions/checkout@v3
-      - uses: actions/setup-node@v3
+      # - uses: actions/checkout@v3
+      # - uses: actions/setup-node@v3
+      #   with:
+      #     node-version: 17
+      # - run: npm install @actions/core jsonwebtoken
+      # - id: environment
+      #   run: node getenvironment.js
+      # - run: echo ${{steps.environment.outputs.environment}}
+
+      - name: Deploy to Azure Storage Account (Staging)
+        uses: rnakamine/azure-files-upload@v1.0.0
         with:
-          node-version: 17
-      - run: npm install @actions/core jsonwebtoken
-      - id: environment
-        run: node getenvironment.js
-      - run: echo ${{steps.environment.outputs.environment}}
+          connection_string: ${{ secrets.AZURE_STORAGE_CONNECTION_STRING }}
+          source: ./build_staging
+          destination: public
 
       - name: DIsplay Staging Context object
         run: echo '${{ toJSON(github) }}'
@@ -61,7 +68,7 @@ jobs:
   deploy-production:
     needs: common
     runs-on: ubuntu-latest
-    # environment: production
+    environment: production
     if: ${{ needs.common.outputs.branch == 'main' }}
 
     steps:
@@ -80,14 +87,21 @@ jobs:
       # - name: DIsplay Environment
       #   run: echo ${{ steps.get-environment.outputs.env }}
 
-      - uses: actions/checkout@v3
-      - uses: actions/setup-node@v3
+      # - uses: actions/checkout@v3
+      # - uses: actions/setup-node@v3
+      #   with:
+      #     node-version: 17
+      # - run: npm install @actions/core jsonwebtoken
+      # - id: environment
+      #   run: node getenvironment.js
+      # - run: echo ${{steps.environment.outputs.environment}}
+
+      - name: Deploy to Azure Storage Account (Production)
+        uses: rnakamine/azure-files-upload@v1.0.0
         with:
-          node-version: 17
-      - run: npm install @actions/core jsonwebtoken
-      - id: environment
-        run: node getenvironment.js
-      - run: echo ${{steps.environment.outputs.environment}}
+          connection_string: ${{ secrets.AZURE_STORAGE_CONNECTION_STRING }}
+          source: ./build_production
+          destination: public
 
       - name: DIsplay Production Context object
         run: echo '${{ toJSON(github) }}'
