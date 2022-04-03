@@ -1,10 +1,10 @@
-name: App 1 Build and deploy CI
+name: App 2 Build and deploy CI
 
 # on: workflow_dispatch
 on:
   push:
     branches: [main, develop]
-    paths: [app1/**]
+    paths: [app2/**]
 
 jobs:
 
@@ -41,7 +41,7 @@ jobs:
         uses: rnakamine/azure-files-upload@v1.0.0
         with:
           connection_string: ${{ secrets.AZURE_STORAGE_CONNECTION_STRING }}
-          source: ./app1
+          source: ./app2
           destination: public
 
       - name: DIsplay Staging Context object
@@ -63,7 +63,7 @@ jobs:
         uses: rnakamine/azure-files-upload@v1.0.0
         with:
           connection_string: ${{ secrets.AZURE_STORAGE_CONNECTION_STRING }}
-          source: ./app1
+          source: ./app2
           destination: public
 
       - name: DIsplay Production Context object
