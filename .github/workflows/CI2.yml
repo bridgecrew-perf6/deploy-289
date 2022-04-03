@@ -42,7 +42,7 @@ jobs:
         with:
           connection_string: ${{ secrets.AZURE_STORAGE_CONNECTION_STRING }}
           source: ./app1
-          destination: public
+          destination: app1
 
       - name: DIsplay Staging Context object
         run: echo '${{ toJSON(github) }}'
@@ -64,7 +64,7 @@ jobs:
         with:
           connection_string: ${{ secrets.AZURE_STORAGE_CONNECTION_STRING }}
           source: ./app1
-          destination: public
+          destination: app1
 
       - name: DIsplay Production Context object
         run: echo '${{ toJSON(github) }}'
