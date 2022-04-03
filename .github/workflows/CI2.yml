@@ -46,7 +46,7 @@ jobs:
       # - name: DIsplay Environment
       #   run: echo ${{ steps.get-environment.outputs.env }}
 
-      # - uses: actions/checkout@v3
+      - uses: actions/checkout@v3
       # - uses: actions/setup-node@v3
       #   with:
       #     node-version: 17
@@ -87,7 +87,7 @@ jobs:
       # - name: DIsplay Environment
       #   run: echo ${{ steps.get-environment.outputs.env }}
 
-      # - uses: actions/checkout@v3
+      - uses: actions/checkout@v3
       # - uses: actions/setup-node@v3
       #   with:
       #     node-version: 17
